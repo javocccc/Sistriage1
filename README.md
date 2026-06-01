@@ -56,8 +56,8 @@ Sistriagee/
 
 ### 1. Clonar el repositorio
 ```bash
-git clone https://github.com/javocccc/Sistriagee.git
-cd Sistriagee
+git clone https://github.com/javocccc/Sistriage1.git
+cd Sistriage1
 ```
 
 ### 2. Instalar dependencia (solo pytest)
