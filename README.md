@@ -1,50 +1,57 @@
-# 🏥 SisTriage — Sistema de Triaje de Urgencias Hospitalarias
+# 🏥 SisTriage — Sistema Avanzado de Triaje Clínico
 
-> Clasificación automática de pacientes mediante algoritmo **MEWS** (Modified Early Warning Score)
+> **Clasificación automatizada de urgencias hospitalarias mediante el algoritmo MEWS (Modified Early Warning Score)**
 
-**Ingeniería Civil en Computación e Informática · Universidad Central de Chile**  
-Autores: Javier Carrasco · Matías Olivares  
-Stakeholders: Benjamín López · Fernando Godoy  
-Docente: Gonzalo Honores · ERS v1.1 · Mayo 2026
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.30%2B-FF4B4B.svg)](https://streamlit.io/)
+[![Pytest](https://img.shields.io/badge/Pytest-Testing-yellow.svg)](https://docs.pytest.org/)
+
+**Autores:** Javier Carrasco · Matías Olivares  
+**Stakeholders:** Benjamín López · Fernando Godoy  
+**Docente:** Gonzalo Honores · Universidad Central de Chile (2026)
 
 ---
 
-## 📋 Descripción
+## 📋 Descripción del Proyecto
 
-SisTriage resuelve un problema crítico en urgencias: sin clasificación objetiva, el personal puede atender casos leves mientras un paciente en riesgo vital espera. El sistema calcula el score MEWS a partir de 8 signos vitales y entrega una clasificación en 4 niveles de prioridad con trazabilidad completa.
+SisTriage es una solución de software diseñada para resolver la saturación en las salas de urgencias. El sistema captura los signos vitales de los pacientes y calcula de manera algorítmica y sin margen de error el **Score MEWS**, clasificando al paciente en 4 niveles de prioridad (Verde, Amarillo, Naranja, Rojo) y dictaminando su tiempo de espera ideal.
 
-**Error aceptable en el cálculo: 0.**
+**El proyecto cuenta con dos interfaces funcionales:**
+1. **Core CLI (Terminal):** Un entorno interactivo de línea de comandos ligero, ideal para despliegues rápidos y pruebas en servidores sin interfaz gráfica.
+2. **Portal Clínico Web:** Una interfaz gráfica moderna, institucional y de alto contraste (adaptada para entornos hospitalarios), con persistencia de datos locales y generación de fichas clínicas.
+
+---
+
+## ✨ Características Principales
+
+- **⚙️ Motor Lógico Aislado:** Lógica de negocio (Cálculo MEWS, Clasificación y Validación) modularizada en la carpeta `src/`.
+- **🌐 Interfaz Web Streamlit:** Diseño responsivo con paleta de colores institucional (Cyan, Celeste, Blanco, Gris) e inyección de CSS personalizado para asegurar alto contraste (textos negros puros).
+- **💾 Historial Clínico Local:** Capacidad de registrar y guardar los datos filiatorios y médicos del paciente en un archivo `.txt` automatizado.
+- **🛡️ Alta Tolerancia a Errores:** Validación exhaustiva de tipos de datos, campos vacíos y valores fisiológicos fuera de rango (ej. FC > 200).
+- **🧪 Cobertura de Testing:** 25 pruebas unitarias automatizadas a través de `pytest`.
 
 ---
 
 ## 📂 Estructura del Repositorio
 
+```text
+Sistriage1/
+│
+├── web_app.py                       ← Interfaz WEB (Portal Clínico Principal)
+├── main.py                          ← Interfaz CLI (Consola interactiva)
+├── requirements.txt                 ← Dependencias del proyecto
+├── README.md                        ← Documentación
+│
+├── src/                             ← Lógica de Negocio
+│   ├── mews_calculator.py           ← (M1) Cálculo del score MEWS
+│   ├── triage_classifier.py         ← (M2) Clasificación y modificadores
+│   └── validator.py                 ← (M3) Validación de datos de entrada
+│
+└── tests/                           ← Pruebas Unitarias
+    ├── test_mews_calculator.py      
+    ├── test_triage_classifier.py    
+    └── test_validator.py
 ```
-Sistriagee/
-│
-├── main.py                          ← Demo CLI interactiva (punto de entrada)
-├── requirements.txt                 ← Dependencias (solo pytest)
-├── README.md
-│
-├── src/
-│   ├── mews_calculator.py           ← M1: cálculo del score MEWS
-│   ├── triage_classifier.py         ← M2: clasificación + modificadores + override
-│   └── validator.py                 ← M3: validación de parámetros de entrada
-│
-├── tests/
-│   ├── test_mews_calculator.py      ← 9 pruebas unitarias M1 (incl. dataset 12/12)
-│   ├── test_triage_classifier.py    ← 9 pruebas unitarias M2
-│   └── test_validator.py            ← 7 pruebas unitarias M3
-│
-└── docs/
-    ├── ERS_SisTriage_v1.1.docx      ← Especificación de Requisitos completa
-    ├── modulos.md                   ← Diseño lógico: módulos, entradas, salidas
-    ├── casos_de_prueba.md           ← Definición de los 25 casos de prueba
-    ├── matriz_trazabilidad.md       ← RF → módulo → función → prueba → resultado
-    └── arquitectura_logica_DFD.svg  ← Diagrama DFD
-```
-
----
 
 ## ⚡ Inicio Rápido (para equipo QA)
 
@@ -62,21 +69,13 @@ cd Sistriage1
 
 ### 2. Instalar dependencia (solo pytest)
 ```bash
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
-### 3. Ejecutar la demo interactiva
+### 🖥️ Uso del Sistema
 ```bash
-python main.py
+python -m streamlit run web_app.py
 ```
-Se abrirá un menú con 4 opciones:
-
-| Opción | Descripción |
-|--------|-------------|
-| `1` | Demo automática — procesa 6 pacientes del dataset de prueba |
-| `2` | Modo interactivo — ingresa un paciente manualmente |
-| `3` | Demo de validación — muestra rechazo de datos inválidos |
-| `4` | Ejecuta las pruebas unitarias (pytest) |
 
 ### 4. Ejecutar demo sin interacción (modo QA)
 ```bash
@@ -91,7 +90,16 @@ python -m pytest tests/ -v
 **Resultado esperado:** `25 passed in ~0.1s`
 
 ---
+##🚨 Guía de Solución de Problemas (Troubleshooting)
 
+| Síntoma / Error | Causa Raíz | Solución Rápida |
+|-------|-------|-----------|
+| Fatal error in launcher: Unable to create process| Acceso directo de pip dañado en Windows.| | Usa siempre python -m pip install <paquete> para forzar el uso del entorno de Python actual. |
+| No such file or directory: 'requeriments.txt' | Error de tipeo (typo) al buscar el archivo de dependencias. | verifica escribir correctamente requirements.txt. |
+| AttributeError: module 'streamlit' has no attribute 'number' | Error de sintaxis en el código web. | Cambiar la función st.number.input() por st.number_input(). |
+| Textos blancos/grises en la Web (Falta de contraste) | El Modo Oscuro predeterminado de Streamlit oculta los estilos inyectados. | Ve al Menú superior derecho de la web (⚙️) > Settings > Theme > Cambiar a Light. Luego presiona Ctrl + F5. |
+
+    
 ## 🎯 Niveles de Clasificación MEWS
 
 | Color | Nivel | Score MEWS | Tiempo máximo |
