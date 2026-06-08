@@ -94,7 +94,7 @@ python -m pytest tests/ -v
 
 | Síntoma / Error | Causa Raíz | Solución Rápida |
 |-------|-------|-----------|
-| Fatal error in launcher: Unable to create process| Acceso directo de pip dañado en Windows.| | Usa siempre python -m pip install <paquete> para forzar el uso del entorno de Python actual. |
+| Fatal error in launcher: Unable to create process| Acceso directo de pip dañado en Windows.| Usa siempre python -m pip install <paquete> para forzar el uso del entorno de Python actual.| Usa siempre python -m pip install <paquete> para forzar el uso del entorno de Python actual. |
 | No such file or directory: 'requeriments.txt' | Error de tipeo (typo) al buscar el archivo de dependencias. | verifica escribir correctamente requirements.txt. |
 | AttributeError: module 'streamlit' has no attribute 'number' | Error de sintaxis en el código web. | Cambiar la función st.number.input() por st.number_input(). |
 | Textos blancos/grises en la Web (Falta de contraste) | El Modo Oscuro predeterminado de Streamlit oculta los estilos inyectados. | Ve al Menú superior derecho de la web (⚙️) > Settings > Theme > Cambiar a Light. Luego presiona Ctrl + F5. |
